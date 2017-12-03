@@ -33,6 +33,10 @@ public class Markup {
 			if (!Character.isDigit(typed.getCharacter().charAt(0)))
 				typed.consume();
 		});
+		length.setOnKeyReleased(released -> {
+			if (getParent() != null)
+				getParent().updateSizes();
+		});
 		length.getStyleClass().add("markup_length");
 		length.setPrefWidth(70);
 
@@ -52,49 +56,15 @@ public class Markup {
 	}
 
 	public void onLineResizeOrMove() {
-//		System.out.println("onLineResizeOrMove");
-//		System.out.println(
-//				startPoint.getLayoutX() + " "
-//						+ startPoint.getLayoutY() + " "
-//						+ endPoint.getLayoutX() + " "
-//						+ endPoint.getLayoutY() + " "
-//		);
-//		System.out.println(
-//				line.getStartX() + " "
-//						+ line.getStartY() + " "
-//						+ line.getEndX() + " "
-//						+ line.getEndY()
-//		);
-//		System.out.println();
 		Pair mid = new Pair((line.getStartX() + line.getEndX()) / 2, (line.getStartY() + line.getEndY()) / 2);
 		length.setLayoutX((double) mid.getKey() - length.getPrefWidth() / 2);
 		length.setLayoutY((double) mid.getValue() - 50);
 
 		if (getParent() != null)
 			getParent().updateSizes();
-
-//		startPoint.setLayoutX(line.getStartX());
-//		startPoint.setLayoutY(line.getStartY());
-//
-//		endPoint.setLayoutX(line.getEndX());
-//		endPoint.setLayoutY(line.getEndY());
 	}
 
 	public void onCirclesMove() {
-//		System.out.println("onCirclesMove");
-//		System.out.println(
-//				startPoint.getLayoutX() + " "
-//						+ startPoint.getLayoutY() + " "
-//						+ endPoint.getLayoutX() + " "
-//						+ endPoint.getLayoutY() + " "
-//		);
-//		System.out.println(
-//				line.getStartX() + " "
-//						+ line.getStartY() + " "
-//						+ line.getEndX() + " "
-//						+ line.getEndY()
-//		);
-//		System.out.println();
 		line.setStartX(startPoint.getLayoutX() + startPoint.getPrefWidth() / 2);
 		line.setStartY(startPoint.getLayoutY() + startPoint.getPrefHeight() / 2);
 		line.setEndX(endPoint.getLayoutX() + endPoint.getPrefWidth() / 2);
@@ -115,20 +85,15 @@ public class Markup {
 		return length;
 	}
 
-//	public double getLengthCoef(boolean test) {
-//		if(test)
-//			return 1.0;
-//		double coef;
-//		try {
-//			coef = Math.sqrt(
-//					(line.getEndX() - line.getStartX()) * (line.getEndX() - line.getStartX())
-//							+ (line.getEndY() - line.getStartY()) * (line.getEndY() - line.getStartY())
-//			) / Double.parseDouble(length.getText());
-//		} catch (Exception e) {
-//			coef = 1;
-//		}
-//		return coef;
-//	}
+	public double getLengthCoef() { // САНТИМЕТРИ НА (РЕАЛЬНІ) ПІКСЕЛІ
+		try {
+			return Integer.parseInt(length.getText()) /
+					module(startPoint.getCenterX() - endPoint.getCenterX(),
+							startPoint.getCenterY() - endPoint.getCenterY());
+		} catch (Exception ignored) {
+		}
+		return 1;
+	}
 
 	public void addToParent(ImViewContainer parent, double x, double y) {
 		parent.getStylesheets().add("/nodes/markup/markupStyle.css");
@@ -190,23 +155,7 @@ public class Markup {
 		return endPoint;
 	}
 
-	public double getLengthCoefX_RealPerImage(){
-		return Math.abs(startPoint.getCenterX() - endPoint.getCenterX()) /
-				Math.abs(startPoint.getImageCenterX() + endPoint.getImageCenterX());
-	}
-
-	public double getLengthCoefY_RealPerImage(){
-		return Math.abs(startPoint.getCenterY() - endPoint.getCenterY()) /
-				Math.abs(startPoint.getImageCenterY() + endPoint.getImageCenterY());
-	}
-
-	public double getLengthCoefX_ImagePerReal(){
-		return Math.abs(startPoint.getImageCenterX() + endPoint.getImageCenterX()) /
-				Math.abs(startPoint.getCenterX() - endPoint.getCenterX());
-	}
-
-	public double getLengthCoefY_ImagePerReal(){
-		return Math.abs(startPoint.getImageCenterY() + endPoint.getImageCenterY()) /
-				Math.abs(startPoint.getCenterY() - endPoint.getCenterY());
+	private double module(double x, double y) {
+		return Math.sqrt(x * x + y * y);
 	}
 }

@@ -1,14 +1,8 @@
 package nodes.imViewContainer;
 
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.shape.Line;
-import model.helpers.Helper;
-import nodes.TwoDirectionArrow;
 import nodes.markup.Markup;
 import nodes.signboard.Signboard;
 import org.opencv.core.Rect;
@@ -62,30 +56,56 @@ public class ImViewContainer extends AnchorPane {
 		widthProperty().addListener(observable -> relocateElems());
 	}
 
-	public void relocateElems() {
-		for (Signboard signboard : signs)
-			signboard.updatePosition();
-		for (Markup markup : markups)
-			markup.updateCenterPosition_ImToReal();
+	public static ImViewContainer copy(ImViewContainer imageView) {
+		ImViewContainer newContainer = new ImViewContainer();
+		newContainer.setImage(imageView.getImage());
+		newContainer.setWidth(newContainer.getImage().getWidth());
+		newContainer.setHeight(newContainer.getImage().getHeight());
+		newContainer.setHistoricalArea(imageView.isHistoricalArea());
+		newContainer.setTestContainer(imageView.testContainer);
+		newContainer.getStylesheets().add("/nodes/markup/markupStyle.css");
+		for (Signboard s : imageView.signs) {
+			Signboard sb = new Signboard(s);
+			newContainer.signs.add(sb);
+			newContainer.getChildren().add(sb);
+			sb.updateBounds_ImageToReal();
+		}
+		for (Markup m : imageView.markups) {
+			Markup mk = new Markup(m);
+			newContainer.markups.add(mk);
+			mk.addAllToParent(newContainer);
+			mk.updateCenterPosition_ImToReal();
+		}
+		return newContainer;
 	}
 
+	public void relocateElems() {
+		for (Markup markup : markups)
+			markup.updateCenterPosition_ImToReal();
+		for (Signboard signboard : signs)
+			signboard.updateBounds_ImageToReal();
+	}
+
+	/**
+	 * add new sign to image
+	 */
 	public void addSign() {
 		Signboard signboard = new Signboard(100, 100, 100, 100);
 		signs.add(signboard);
 		getChildren().add(signboard);
-		signboard.updatePosition();
-		updateSizes();
+		signboard.updateBounds_ImageToReal();
+		signboard.updateSize_RealToActual();
+		signboard.setSizeLabel();
 	}
 
 	public void addSign(Rect r) {
 		r = getPosition(r);
 		Signboard sign = new Signboard(r.x, r.y, r.width, r.height);
 		signs.add(sign);
-		updateSizes();
 		getChildren().add(sign);
-		//sign.updateActualSizeFromReal();
-		sign.updatePosition();
-
+		sign.setSizeLabel();
+		sign.updateBounds_ImageToReal();
+		sign.updateSize_RealToActual();
 	}
 
 	public void addMarkup() {
@@ -93,7 +113,6 @@ public class ImViewContainer extends AnchorPane {
 		setStyle("-fx-cursor: crosshair");
 		markups.add(new Markup());
 		setOnMouseClicked(clicked -> markups.get(markups.size() - 1).putStartPoint(this, clicked.getX(), clicked.getY()));
-		markups.get(markups.size() - 1).getLength().setOnKeyReleased(set -> updateSizes());
 	}
 
 	//Puting test markup into test ImViewContainer
@@ -111,13 +130,16 @@ public class ImViewContainer extends AnchorPane {
 		markups.add(markup);
 	}
 
-	public void updateSizes() {
-		if (markups.isEmpty())
-			return;
-		for (Signboard signboard : signs) {
-			signboard.setSizeLabel();
-			//signboard.updateActualSizeFromReal();
-		}
+	//add sign on test container
+	public void addSign(Signboard signboard) {
+		signs.add(signboard);
+		getChildren().add(signboard);
+		signboard.updateBounds_ImageToReal();
+		signboard.removeEdit();
+		System.out.println("ADD " + signboard.getLayoutX() + " " + signboard.getLayoutY() + " "
+				+ signboard.getPrefWidth() + " " + signboard.getPrefHeight());
+		System.out.println(signboard.getImageX() + " " + signboard.getImageY() + " "
+				+ signboard.getImageWidth() + " " + signboard.getImageHeight());
 	}
 
 	public Rect getPosition(Rect r) {
@@ -160,18 +182,6 @@ public class ImViewContainer extends AnchorPane {
 		setWidth(imageView.getFitWidth());
 	}
 
-	public double getCoefX() {
-		return testContainer ? 1 : getWidth() / ((getImage() == null) ? getWidth() : getImage().getWidth());
-	}
-
-	public double getCoefY() {
-		return testContainer ? 1 : getHeight() / ((getImage() == null) ? getHeight() : getImage().getHeight());
-	}
-
-	public void setPreserveRatio(boolean preserveRatio) {
-		imageView.setPreserveRatio(preserveRatio);
-	}
-
 	public void removeMarkup(Markup markup) {
 		markups.remove(markup);
 		markup.removeFromParent();
@@ -179,44 +189,19 @@ public class ImViewContainer extends AnchorPane {
 			s.setSizeLabel();
 	}
 
-
-	//add sign on test container
-	public void addSign(Signboard signboard) {
-		signs.add(signboard);
-		getChildren().add(signboard);
-		signboard.removeEdit();
-	}
-
 	public void applyOptionsToAll(SignboardOptions sign) {
 		for (Signboard s : signs)
 			s.setOptions(sign);
 	}
 
-	//public double getLengthCoef() {
-	//	return markups.isEmpty() ? 1 : markups.get(0).getLengthCoef(testContainer);
-	//}
-
-	public static ImViewContainer copy(ImViewContainer imageView) {
-		ImViewContainer newContainer = new ImViewContainer();
-		newContainer.setImage(imageView.getImage());
-		newContainer.setWidth(newContainer.getImage().getWidth());
-		newContainer.setHeight(newContainer.getImage().getHeight());
-		newContainer.setHistoricalArea(imageView.isHistoricalArea());
-		newContainer.setTestContainer(imageView.testContainer);
-		newContainer.getStylesheets().add("/nodes/markup/markupStyle.css");
-		for (Signboard s : imageView.signs) {
-			Signboard sb = new Signboard(s);
-			newContainer.signs.add(sb);
-			newContainer.getChildren().add(sb);
-			sb.updatePosition();
+	public void updateSizes() {
+		if (markups.isEmpty())
+			return;
+		for (Signboard signboard : signs) {
+			signboard.limit();
+			signboard.updateSize_RealToActual();
+			signboard.setSizeLabel();
 		}
-		for (Markup m : imageView.markups) {
-			Markup mk = new Markup(m);
-			newContainer.markups.add(mk);
-			mk.addAllToParent(newContainer);
-			mk.updateCenterPosition_ImToReal();
-		}
-		return newContainer;
 	}
 
 	public double getMaxSignWidth() {
@@ -231,53 +216,31 @@ public class ImViewContainer extends AnchorPane {
 		getChildren().remove(signboard);
 	}
 
-
-
-	public double getLengthCoef_ActualPerImage(){
-		return (markups.isEmpty()) ? 1.0 : markups.get(0).get
+	/**
+	 * Сантиметри / (реальні) пікселі
+	 *
+	 * @return
+	 */
+	public double lengthCoef() {
+		return (testContainer || markups.isEmpty()) ? 1 : markups.get(0).getLengthCoef();
 	}
 
-	public double getLengthCoef_ImagePerReal(){
-
+	/**
+	 * розмір вікна до розміру зображення
+	 *
+	 * @return
+	 */
+	public double sizeCoef() {
+		if (testContainer) return 1;
+		System.err.println("IMAGE COEF ERROR IS "
+				+ Math.abs(getWidth() / imageView.getImage().getWidth()
+				- getHeight() / imageView.getImage().getHeight()));
+		return getWidth() / imageView.getImage().getWidth();
 	}
 
-	public double getLengthCoef_RealPerImage(){
-
-	}
-
-	public double getLengthCoef_ImagePerActual(){
-
-	}
-
-	public double getLengthCoefX_ActualPerImage(){
-
-	}
-
-	public double getLengthCoefX_ImagePerReal(){
-
-	}
-
-	public double getLengthCoefX_RealPerImage(){
-
-	}
-
-	public double getLengthCoefX_ImagePerActual(){
-
-	}
-
-	public double getLengthCoefY_ActualPerImage(){
-
-	}
-
-	public double getLengthCoefY_ImagePerReal(){
-
-	}
-
-	public double getLengthCoefY_RealPerImage(){
-
-	}
-
-	public double getLengthCoefY_ImagePerActual(){
-
+	public void fitSizeToImage() {
+		//setSi
+		setHeight(imageView.getImage().getHeight());
+		setWidth(imageView.getImage().getWidth());
 	}
 }

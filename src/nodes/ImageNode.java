@@ -82,6 +82,20 @@ public class ImageNode extends Region {
 		return y;
 	}
 
+	public double getX_ImToReal() {
+		return getImageX() * getImViewContainer().sizeCoef();
+	}
 
+	public int getX_RealToIm() {
+		return (int) (getLayoutX() / getImViewContainer().sizeCoef());
+	}
+
+	public double getY_ImToReal() {
+		return getImageY() * getImViewContainer().sizeCoef();
+	}
+
+	public int getY_RealToIm() {
+		return (int) (getLayoutY() / getImViewContainer().sizeCoef());
+	}
 
 }

@@ -6,12 +6,14 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import model.helpers.ObjectCopying.DeepCopy;
 import nodes.imViewContainer.ImViewContainer;
 import stages.editSignboard.EditSignboardController;
 import stages.editSignboard.SignboardOptions;
@@ -38,8 +40,25 @@ public class Signboard extends Pane implements Serializable {
 
 	private ArrayList<ResizingCircle> resizingCircles;
 
-	public ImViewContainer getImViewContainer(){
-		return (ImViewContainer)getParent();
+	public Signboard() {
+
+	}
+
+	public Signboard(Signboard s) {
+		init();
+		imageX = s.getImageX();
+		imageY = s.getImageY();
+		imageWidth = s.getImageWidth();
+		imageHeight = s.getImageHeight();
+		//setPrefWidth(s.getPrefWidth());
+		//setPrefHeight(s.getPrefHeight());
+		setOptions(s.getOptions());
+		sign.setText(s.getText());
+		applyStyle();
+	}
+
+	public ImViewContainer getImViewContainer() {
+		return (ImViewContainer) getParent();
 	}
 
 	public void init() {
@@ -53,7 +72,7 @@ public class Signboard extends Pane implements Serializable {
 		addNodes();
 		addCM();
 
-		addEventFilter(MouseEvent.MOUSE_DRAGGED, dr -> updateImageSizeAndBounds());
+		//addEventFilter(MouseEvent.MOUSE_DRAGGED, dr -> updateImageSizeAndBounds());
 		heightProperty().addListener(((observable, oldValue, newValue) -> onSignboardResize()));
 		widthProperty().addListener(((observable, oldValue, newValue) -> onSignboardResize()));
 
@@ -64,15 +83,15 @@ public class Signboard extends Pane implements Serializable {
 		setOnMouseReleased(this::onReleased);
 	}
 
-	public void setText(String text){
-		sign.setText(text);
-	}
-
-	public String getText(){
+	public String getText() {
 		return sign.getText();
 	}
 
-	private void initAnim(){
+	public void setText(String text) {
+		sign.setText(text);
+	}
+
+	private void initAnim() {
 		showEdit = new Timeline(new KeyFrame(
 				Duration.millis(200),
 				new KeyValue(edit.layoutYProperty(), 0),
@@ -84,34 +103,17 @@ public class Signboard extends Pane implements Serializable {
 				new KeyValue(edit.opacityProperty(), 0.0)
 		));
 		setOnMouseEntered(entered -> {
-			if(showEdit.getStatus() != Animation.Status.RUNNING)
-			showEdit.play();
+			if (showEdit.getStatus() != Animation.Status.RUNNING)
+				showEdit.play();
 		});
 		setOnMouseExited(exited -> hideEdit.play());
 	}
 
-	private void addCM(){
+	private void addCM() {
 		MenuItem delete = new MenuItem("Delete");
 		delete.setOnAction(remove -> getImViewContainer().removeSign(this));
 		contextMenu = new ContextMenu(delete);
 		setOnContextMenuRequested(showContext -> contextMenu.show(this, showContext.getScreenX(), showContext.getScreenY()));
-	}
-
-	public Signboard(){
-
-	}
-
-	public Signboard(Signboard s){
-		init();
-		imageX = 150;
-		imageY = 100;
-		imageWidth = s.getImageWidth();
-		imageHeight = s.getImageHeight();
-		setPrefWidth(s.getPrefWidth());
-		setPrefHeight(s.getPrefHeight());
-		options.setStyle(SignboardOptions.copyStyle(s.getOptions()));
-		sign.setText(s.getText());
-		applyStyle();
 	}
 
 	public Signboard(int imageX, int imageY, int imageWidth, int imageHeight) {
@@ -125,13 +127,14 @@ public class Signboard extends Pane implements Serializable {
 	}
 
 	public void onSignboardResize() {
+		System.out.println("RESIZE");
 		for (ResizingCircle r : resizingCircles)
 			r.stayOnThePosition();
-		getImViewContainer().updateSizes();
+		setSizeLabel();
 		sign.setPrefWidth(getPrefWidth());
 		sign.setPrefHeight(getPrefHeight());
 		edit.setLayoutX(getPrefWidth() - 30);
-		//updateActualSizeFromReal();
+
 	}
 
 	private void addNodes() {
@@ -154,11 +157,10 @@ public class Signboard extends Pane implements Serializable {
 		edit.getStyleClass().add("editButton");
 		edit.setPrefSize(20, 20);
 		edit.setLayoutX(getPrefWidth() - 20);
-		edit.setLayoutY( - 20);
+		edit.setLayoutY(-20);
 		edit.setOpacity(0.0);
 		edit.setOnAction(action -> {
 			SignboardOptions sign = EditSignboardController.showOptionsWindow(this);
-
 			hideEdit.play();
 		});
 		getChildren().addAll(size, sign, edit);
@@ -169,7 +171,7 @@ public class Signboard extends Pane implements Serializable {
 	}
 
 	public void setSizeLabel() {
-		Double square = countSizeInMeters();
+		Double square = countSquare();
 		size.getStyleClass().remove("toBig");
 		if (square > 3 || getImViewContainer().isHistoricalArea() && square > 1)
 			size.getStyleClass().add("toBig");
@@ -213,24 +215,24 @@ public class Signboard extends Pane implements Serializable {
 			return;
 		setLayoutX(getXInParent(e) - x);
 		setLayoutY(getYInParent(e) - y);
-		updateImageSizeAndBounds();
+		updatePosition_RealToImage();
 		saveCurBounds();
 		e.consume();
 	}
 
-	private double getXInParent(MouseEvent e){
+	private double getXInParent(MouseEvent e) {
 		double xInParent = e.getSceneX();
 		Parent p = this;
-		while ((p = p.getParent()) != p.getScene().getRoot()){
+		while ((p = p.getParent()) != p.getScene().getRoot()) {
 			xInParent -= p.getLayoutX();
 		}
 		return xInParent;
 	}
 
-	private double getYInParent(MouseEvent e){
+	private double getYInParent(MouseEvent e) {
 		double yInParent = e.getSceneY();
 		Parent p = this;
-		while ((p = p.getParent()) != p.getScene().getRoot()){
+		while ((p = p.getParent()) != p.getScene().getRoot()) {
 			yInParent -= p.getLayoutY();
 		}
 		return yInParent;
@@ -242,7 +244,7 @@ public class Signboard extends Pane implements Serializable {
 		e.consume();
 	}
 
-	public void removeEdit(){
+	public void removeEdit() {
 		getChildren().remove(edit);
 	}
 
@@ -255,48 +257,42 @@ public class Signboard extends Pane implements Serializable {
 		applyStyle();
 	}
 
-	public void applyStyle(){
+	public void applyStyle() {
 		StringBuilder sb = new StringBuilder();
-		for(String key : options.getStyle().keySet())
+		for (String key : options.getStyle().keySet())
 			sb.append(key + options.getStyle().get(key) + ";\n");
 		setStyle(sb.toString());
 	}
 
-	public double countSizeInMeters_realPerLenCoef() {
-		double square = Math.floor((getPrefWidth() / getImViewContainer().getLengthCoef()) * (getPrefHeight() / getImViewContainer().getLengthCoef()) / 100) / 100;
-		System.out.println("SQUARE: " +
-				(getPrefWidth() / getImViewContainer().getLengthCoef()) * (getPrefHeight() / getImViewContainer().getLengthCoef())
-				+" "+ options.getActualHeight() * options.getActualWidth());
-		return square;
-	}
-
-	private double imToReal(int im, double coef){
+	private double imToReal(int im, double coef) {
 		return im * coef;
 	}
 
-	private int realToIm(double real, double coef){
-		return (int)(real / coef);
+	private int realToIm(double real, double coef) {
+		return (int) (real / coef);
 	}
 
 	public void saveCurBounds() {
-		prevImageX = realToIm(getLayoutX(), getImViewContainer().getCoefX());
-		prevImageY = realToIm(getLayoutY(), getImViewContainer().getCoefY());
-		prevImageWidht = realToIm(getPrefWidth(), getImViewContainer().getCoefX());
-		prevImageHeight = realToIm(getPrefHeight(), getImViewContainer().getCoefY());
+		prevImageX = imageX;
+		prevImageY = imageY;
+		prevImageWidht = imageWidth;
+		prevImageHeight = imageHeight;
 	}
 
-	public void backup(){
-		setLayoutX(imToReal(prevImageX, getImViewContainer().getCoefX()));
-		setLayoutY(imToReal(prevImageY, getImViewContainer().getCoefY()));
-		setPrefWidth(imToReal(prevImageWidht, getImViewContainer().getCoefX()));
-		setPrefHeight(imToReal(prevImageHeight, getImViewContainer().getCoefY()));
+	public void backup() {
+		imageX = prevImageX;
+		imageY = prevImageY;
+		imageWidth = prevImageWidht;
+		imageHeight = prevImageHeight;
+		updateBounds_ImageToReal();
+		updateSize_RealToActual();
 	}
 
-	public int getImageX(){
+	public int getImageX() {
 		return imageX;
 	}
 
-	public void setImageX(int imageX){
+	public void setImageX(int imageX) {
 		this.imageX = imageX;
 	}
 
@@ -304,7 +300,7 @@ public class Signboard extends Pane implements Serializable {
 		return imageY;
 	}
 
-	public void setImageY(int imageY){
+	public void setImageY(int imageY) {
 		this.imageY = imageY;
 	}
 
@@ -312,11 +308,11 @@ public class Signboard extends Pane implements Serializable {
 		return imageWidth;
 	}
 
-	public void setImageWidth(int width){
+	public void setImageWidth(int width) {
 		this.imageWidth = width;
 	}
 
-	public void setImageHeight(int height){
+	public void setImageHeight(int height) {
 		this.imageHeight = height;
 	}
 
@@ -324,86 +320,74 @@ public class Signboard extends Pane implements Serializable {
 		return imageHeight;
 	}
 
-
-	//relative layout part
-	public void updateSize_ActualToImage() {
-		updateWidth_ActualToImage();
-		updateHeight_ActualToImage();
+	public void updateSize_RealToActual() {
+		System.out.println("updateSize_RealToActual");
+		options.setActualWidth((int) (getPrefWidth() * getImViewContainer().lengthCoef()));
+		options.setActualHeight((int) (getPrefHeight() * getImViewContainer().lengthCoef()));
 	}
 
-	public void updateWidth_ActualToImage(){
-		setImageWidth((int)(options.getActualWidth() / getImViewContainer().getLengthCoefX_ActualPerImage()));
-	}
-
-	public void updateHeight_ActualToImage(){
-		setImageHeight((int)(options.getActualHeight() / getImViewContainer().getLengthCoefY_ActualPerImage()));
-	}
-
-	public void updateBounds_ImageToReal(){
-		updateSize_ImageToReal();
-		updatePosition_ImageToReal();
-	}
-
-	public void updateSize_ImageToReal(){
-		updateWidth_ImageToReal();
-		updateHeight_ImageToReal();
-	}
-
-	public void updatePosition_ImageToReal(){
-		updateX_ImageToReal();
-		updateY_ImageToReal();
-	}
-
-	public void updateWidth_ImageToReal(){
-		setPrefWidth(imageWidth / getImViewContainer().getLengthCoefX_ImagePerReal());
-	}
-
-	public void updateHeight_ImageToReal(){
-		setPrefHeight(imageHeight / getImViewContainer().getLengthCoefY_ImagePerReal());
-	}
-
-	public void updateX_ImageToReal(){
-		setLayoutX(imageX / getImViewContainer().getCoefX());
-	}
-
-	public void updateY_ImageToReal(){
-		setLayoutY(imageY / getImViewContainer().getCoefY());
-	}
-
-	public void updateBounds_RealToImage(){
+	public void updateBounds_RealToImage() {
+		System.out.println("updateBounds_RealToImage");
 		updateSize_RealToImage();
 		updatePosition_RealToImage();
 	}
 
-	public void updateSize_RealToImage(){
-		updateWidth_RealToImage();
-		updateHeight_RealToImage();
+	public void updateSize_RealToImage() {
+		System.out.println("updateSize_RealToImage");
+		setImageWidth((int) (getPrefWidth() / getImViewContainer().sizeCoef()));
+		setImageHeight((int) (getPrefHeight() / getImViewContainer().sizeCoef()));
 	}
 
-	public void updateWidth_RealToImage(){
-		imageWidth = getPrefWidth() * getImViewContainer().getLengt
+	public void updatePosition_RealToImage() {
+		System.out.println("updatePosition_RealToImage");
+		setImageX((int) (getLayoutX() / getImViewContainer().sizeCoef()));
+		setImageY((int) (getLayoutY() / getImViewContainer().sizeCoef()));
 	}
 
-	public void updateHeight_RealToImage(){
-
+	public void updateSize_ActualToReal() {
+		System.out.println("updateSize_ActualToReal");
+		setPrefWidth(options.getActualWidth() / getImViewContainer().lengthCoef());
+		setPrefHeight(options.getActualHeight() / getImViewContainer().lengthCoef());
 	}
 
-	public void updatePosition_RealToImage(){
-		updateX_RealToImage();
-		updateY_RealToImage();
+	public void updateBounds_ImageToReal() {
+		System.out.println("updateBounds_ImageToReal");
+		updateSize_ImageToReal();
+		updatePosition_ImageToReal();
 	}
 
-	public void updateX_RealToImage(){
-
+	public void updateSize_ImageToReal() {
+		System.out.println("updateSize_ImageToReal");
+		setPrefWidth(getImageWidth() * getImViewContainer().sizeCoef());
+		setPrefHeight(getImageHeight() * getImViewContainer().sizeCoef());
 	}
 
-	public void updateY_RealToImage(){
-
+	public void updatePosition_ImageToReal() {
+		System.out.println("updatePosition_ImageToReal");
+		setLayoutX(getImageX() * getImViewContainer().sizeCoef());
+		setLayoutY(getImageY() * getImViewContainer().sizeCoef());
 	}
 
-	public void updateSize_ImageToActual(){
-		updateWidth_ImageToActual();
-		updateHeight_ImageToActual();
+	public double countSquare() {
+		return (double) (options.getActualWidth() * options.getActualHeight() / 100) / 100;
 	}
 
+	public void limit() {
+		if (getImViewContainer() == null) return;
+		if (getImViewContainer().getMarkups().isEmpty()) return;
+		while (true) {
+			if (countSquare() > 3.0 || getImViewContainer().isHistoricalArea() && countSquare() > 1.0)
+				setPrefHeight(getPrefHeight() - 1);
+			else
+				break;
+
+			if (countSquare() > 3.0 || getImViewContainer().isHistoricalArea() && countSquare() > 1.0)
+				setPrefWidth(getPrefWidth() - 1);
+			else
+				break;
+			updateSize_RealToActual();
+		}
+		updateBounds_RealToImage();
+		updateSize_RealToActual();
+	}
 }

@@ -2,7 +2,6 @@ package stages.mainStage;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -12,7 +11,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import model.helpers.FileProcessor;
@@ -64,9 +62,21 @@ public class MainStageController {
 		Patterns.fillPatterns(new File("doors.txt"), new File("windows.txt"));
 		imageViewVBox.widthProperty().addListener(((observable, oldValue, newValue) -> {
 			imageView.setFitWidth((imageView.getImage() == null) ? 0 : imageViewVBox.getWidth());
+
+//			System.out.println(" == Resizing Width == ");
+//			System.out.println(imageViewVBox.getWidth() + " " + imageViewVBox.getHeight());
+//			System.out.println(imageView.getWidth() + " " + imageView.getHeight());
+//			System.out.println(imageView.getImage().getWidth() + " " + imageView.getImage().getHeight());
+//			System.out.println(" == ");
 		}));
 		imageViewVBox.heightProperty().addListener(((observable, oldValue, newValue) -> {
 			imageView.setFitHeight((imageView.getImage() == null) ? 0 : imageViewVBox.getHeight());
+
+//			System.out.println(" == Resizing Width == ");
+//			System.out.println(imageViewVBox.getWidth() + " " + imageViewVBox.getHeight());
+//			System.out.println(imageView.getWidth() + " " + imageView.getHeight());
+//			System.out.println(imageView.getImage().getWidth() + " " + imageView.getImage().getHeight());
+//			System.out.println(" == ");
 		}));
 
 	}
@@ -139,6 +149,7 @@ public class MainStageController {
 		}
 
 		ImViewContainer imViewCopy = ImViewContainer.copy(imageView);
+		imViewCopy.fitSizeToImage();
 		WritableImage image = new WritableImage(
 				(int)imViewCopy.getWidth() + 1, (int)imViewCopy.getHeight() + 1
 		);

@@ -148,14 +148,15 @@ class ResizingCircle extends Region {
 	private void onDragged(MouseEvent mouseEvent) {
 		if (newCenterX != -1) getSign().setPrefWidth(Math.abs(newCenterX - anchorX));
 		if (newCenterY != -1) getSign().setPrefHeight(Math.abs(newCenterY - anchorY));
+		getSign().updateSize_RealToActual();
+		getSign().updateBounds_RealToImage();
 		if (getSign().getOptions().isAutoLimited())
-			if(getSign().getImViewContainer().isHistoricalArea() && getSign().countSizeInMeters() > 1
-					|| getSign().countSizeInMeters() > 3)
+			if (getSign().getImViewContainer().isHistoricalArea() && getSign().countSquare() > 1.0
+					|| getSign().countSquare() > 3.0)
 				getSign().backup();
 		getSign().saveCurBounds();
 		newCenterX = -1;
 		newCenterY = -1;
-		getSign().updateImageSizeAndBounds();
 		mouseEvent.consume();
 	}
 

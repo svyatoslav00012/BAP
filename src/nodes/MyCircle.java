@@ -49,51 +49,35 @@ public class MyCircle extends ImageNode {
 	}
 
 	public int getImageCenterX(){
-		return getImageX() + (int)(getPrefWidth() / 2 / getImViewContainer().getCoefX());
-	}
-
-	public int getImageCenterY(){
-		return getImageY() + (int)(getPrefHeight() / 2 / getImViewContainer().getCoefY());
+		return (int) ((getLayoutX() + getPrefWidth() / 2) * ((getImViewContainer() == null) ? 1 : getImViewContainer().sizeCoef()));
 	}
 
 	public void setImageCenterX(int x){
-		setImageX(x - (int)(getPrefWidth() / 2 / ((getImViewContainer() == null) ? 1 :getImViewContainer().getCoefX())));
+		setImageX(x - (int) (getPrefWidth() / 2 * ((getImViewContainer() == null) ? 1 : getImViewContainer().sizeCoef())));
+	}
+
+	public int getImageCenterY() {
+		return (int) ((getImageY() + getPrefHeight() / 2) * ((getImViewContainer() == null) ? 1 : getImViewContainer().sizeCoef()));
 	}
 
 	public void setImageCenterY(int y){
-		setImageY(y - (int)(getPrefHeight() / 2 / ((getImViewContainer() == null) ? 1 : getImViewContainer().getCoefY())));
-	}
-
-	public double getX_ImToReal(){
-		return getImageX() * getImViewContainer().getCoefX();
-	}
-
-	public int getX_RealToIm(){
-		return (int)(getLayoutX() / getImViewContainer().getCoefX());
-	}
-
-	public double getY_ImToReal(){
-		return getImageY() * getImViewContainer().getCoefY();
-	}
-
-	public int getY_RealToIm(){
-		return (int)(getLayoutY() / getImViewContainer().getCoefY());
+		setImageY(y - (int) (getPrefHeight() / 2 * ((getImViewContainer() == null) ? 1 : getImViewContainer().sizeCoef())));
 	}
 
 	public double getCenterX_ImToReal(){
-		return getImageCenterX() * getImViewContainer().getCoefX();
+		return getImageCenterX() * ((getImViewContainer() == null) ? 1 : getImViewContainer().sizeCoef());
 	}
 
 	public int getCenterX_RealToIm(){
-		return (int)(getCenterX() / getImViewContainer().getCoefX());
+		return (int) (getCenterX() / ((getImViewContainer() == null) ? 1 : getImViewContainer().sizeCoef()));
 	}
 
 	public double getCenterY_ImToReal(){
-		return getImageCenterY() * getImViewContainer().getCoefY();
+		return getImageCenterY() * ((getImViewContainer() == null) ? 1 : getImViewContainer().sizeCoef());
 	}
 
 	public int getCenterY_RealToIm(){
-		return (int)(getCenterY() / getImViewContainer().getCoefY());
+		return (int) (getCenterY() / ((getImViewContainer() == null) ? 1 : getImViewContainer().sizeCoef()));
 	}
 
 

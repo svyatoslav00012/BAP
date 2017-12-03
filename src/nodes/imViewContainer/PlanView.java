@@ -13,13 +13,21 @@ import java.util.ArrayList;
 
 public class PlanView extends ImViewContainer {
 
-	private double lengthCoef;
+	private double sourceLengthCoef;
 
 	public PlanView(ImViewContainer container) {
-		lengthCoef = container.getLengthCoef();
+		sourceLengthCoef = container.lengthCoef();
 		setPrefWidth(container.getMaxSignWidth() + 600);
 		copySigns(container.getSigns());
 		drawAnnotations();
+	}
+
+	public double lengthCoef() {
+		return sourceLengthCoef;
+	}
+
+	public double sizeCoef() {
+		return 1;
 	}
 
 	public void copySigns(ArrayList<Signboard> signboards) {
@@ -35,9 +43,10 @@ public class PlanView extends ImViewContainer {
 		for(Signboard prev: getSigns())
 			y += prev.getImageHeight() + 200;
 		setPrefHeight( y + s.getImageHeight() + 100);
-		s.setImageX(200);
-		s.setImageY(y);
 		getChildren().add(s);
+		s.updateBounds_ImageToReal();
+		s.setLayoutX(200);
+		s.setLayoutY(y);
 	}
 
 	public void drawAnnotations() {
@@ -106,8 +115,8 @@ public class PlanView extends ImViewContainer {
 	}
 
 	public void drawSize(Signboard s) {
-		Label labelWidth = new Label(s.getImageWidth() + " см");
-		Label labelHeight = new Label(s.getImageHeight() + " см");
+		Label labelWidth = new Label(s.getOptions().getActualWidth() + " см");
+		Label labelHeight = new Label(s.getOptions().getActualHeight() + " см");
 		labelHeight.getStyleClass().add("sizeLabel");
 		labelWidth.getStyleClass().add("sizeLabel");
 
@@ -139,7 +148,7 @@ public class PlanView extends ImViewContainer {
 		+ "; -fx-border-color: black; -fx-border-width: 1px;");
 		backgroundColor2.setText(Helper.makeDoubleShorter(backgroundColor2.getText()));
 
-		Label square = new Label("Площа: " + countSquare(s) + " м. кв.");
+		Label square = new Label("Площа: " + s.countSquare() + " м. кв.");
 
 		HBox fontFamily = new HBox(10, fontFamily1, fontFamily2);
 		HBox fontColor = new HBox(10, fontColor1, fontColor2, fontColor3);
@@ -152,7 +161,4 @@ public class PlanView extends ImViewContainer {
 		getChildren().add(options);
 	}
 
-	private double countSquare(Signboard s){
-			return Math.floor((s.getPrefWidth() / lengthCoef) * (s.getPrefHeight() / lengthCoef) / 100) / 100;
-	}
 }

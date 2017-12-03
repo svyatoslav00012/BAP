@@ -79,16 +79,19 @@ public class EditSignboardController {
 		return l;
 	}
 
-	public void onAutoLimitedChoose(ActionEvent actionEvent) {
-		signboard.getOptions().setAutoLimited(autoLimitedChoiceBox.isSelected());
-		if(signboard.getOptions().isAutoLimited())
-		while (testContainer.isHistoricalArea() && signboard.countSizeInMeters() > 1.0
-				|| signboard.countSizeInMeters() > 3.0) {
-			signboard.setPrefHeight(signboard.getPrefHeight() - 1);
-			signboard.setPrefWidth(signboard.getPrefWidth() - 1);
-			signboard.onSignboardResize();
-		}
-		signboard.saveCurBounds();
+	public static SignboardOptions showOptionsWindow(Signboard s) {
+		MyStage stage = new MyStage("/stages/editSignboard/editSignboard1.fxml", WCBTypes.ICONIFIED, WCBTypes.MXMIZE, WCBTypes.CLOSE);
+		((EditSignboardController) stage.getLoader().getController()).update(s);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.animatingShowAndWait();
+		SignboardOptions options = ((EditSignboardController) stage.getLoader().getController()).getOptions();
+		s.setOptions(options);
+		if (options.isApplyToAll())
+			s.getImViewContainer().applyOptionsToAll(options);
+		s.setText(((EditSignboardController) stage.getLoader().getController()).signboard.getText());
+		s.updateSize_ActualToReal();
+		s.updateSize_RealToImage();
+		return options;
 	}
 
 	public void onFontFamilyChoose(ActionEvent actionEvent) {
@@ -143,16 +146,18 @@ public class EditSignboardController {
 		signboard.applyStyle();
 	}
 
-	public void update(Signboard s){
-		cur = s;
-		testContainer.setHistoricalArea(s.getImViewContainer().isHistoricalArea());
-		signboard = new Signboard(s);
-		testContainer.addSign(signboard);
-		signboard.setOptions(s.getOptions());
-		signboard.setLayoutX((testContainer.getPrefWidth() - signboard.getPrefWidth()) / 2);
-		signboard.setLayoutY((testContainer.getPrefHeight() - signboard.getPrefHeight()) / 2);
-		signboard.applyStyle();
-		updateItems();
+	public void onAutoLimitedChoose(ActionEvent actionEvent) {
+		signboard.getOptions().setAutoLimited(autoLimitedChoiceBox.isSelected());
+		if (signboard.getOptions().isAutoLimited())
+			signboard.limit();
+		signboard.saveCurBounds();
+	}
+
+	public void onSignboardResize() {
+		heightField.setText(signboard.getOptions().getActualHeight() + "");
+		heightField.positionCaret(heightField.getText().length());
+		widthField.setText(signboard.getOptions().getActualWidth() + "");
+		widthField.positionCaret(widthField.getText().length());
 	}
 
 	public void updateItems(){
@@ -195,14 +200,23 @@ public class EditSignboardController {
 		autoLimitedChoiceBox.setSelected(getOptions().isAutoLimited());
 	}
 
-	public void onHeightChanged(KeyEvent keyEvent) {
-		signboard.getOptions().setActualHeight(heightField.getText().isEmpty() ? 0 : Integer.parseInt(heightField.getText()));
-		signboard.updateSizeFromActual();
+	public void update(Signboard s) {
+		cur = s;
+		testContainer.setHistoricalArea(s.getImViewContainer().isHistoricalArea());
+		signboard = new Signboard(s);
+		signboard.setOptions(s.getOptions());
+		signboard.setLayoutX((testContainer.getPrefWidth() - signboard.getPrefWidth()) / 2);
+		signboard.setLayoutY((testContainer.getPrefHeight() - signboard.getPrefHeight()) / 2);
+		testContainer.addSign(signboard);
+		signboard.heightProperty().addListener(observable -> onSignboardResize());
+		signboard.widthProperty().addListener(observable -> onSignboardResize());
+		updateItems();
 	}
 
-	public void onWidthChanged(KeyEvent keyEvent) {
-		signboard.getOptions().setActualWidth(widthField.getText().isEmpty() ? 0 : Integer.parseInt(widthField.getText()));
-		signboard.updateSizeFromActual();
+	public void onHeightChanged(KeyEvent keyEvent) {
+		signboard.getOptions().setActualHeight(heightField.getText().isEmpty() ? 0 : Integer.parseInt(heightField.getText()));
+		signboard.updateSize_ActualToReal();
+		signboard.updateSize_RealToImage();
 	}
 
 	public void onFontSizeChanged(KeyEvent keyEvent) {
@@ -211,18 +225,9 @@ public class EditSignboardController {
 		signboard.applyStyle();
 	}
 
-	public static SignboardOptions showOptionsWindow(Signboard s) {
-		MyStage stage = new MyStage("/stages/editSignboard/editSignboard1.fxml", WCBTypes.ICONIFIED, WCBTypes.MXMIZE, WCBTypes.CLOSE);
-		((EditSignboardController) stage.getLoader().getController()).update(s);
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.animatingShowAndWait();
-		SignboardOptions options = ((EditSignboardController) stage.getLoader().getController()).getOptions();
-		s.setOptions(options);
-		if(options.isApplyToAll())
-			s.getImViewContainer().applyOptionsToAll(options);
-		//s.applyStyle();
-		s.setText(((EditSignboardController) stage.getLoader().getController()).signboard.getText());
-		s.updateSizeFromActual();
-		return options;
+	public void onWidthChanged(KeyEvent keyEvent) {
+		signboard.getOptions().setActualWidth(widthField.getText().isEmpty() ? 0 : Integer.parseInt(widthField.getText()));
+		signboard.updateSize_ActualToReal();
+		signboard.updateSize_RealToImage();
 	}
 }
