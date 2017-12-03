@@ -76,7 +76,7 @@ public class WCPane extends AnchorPane{//window control pane
 	}
 
 	public WCPane(WCBTypes... buttons){
-		this(LOGO, "", 40, buttons);
+		this(LOGO, "", 30, buttons);
 	}
 
 	public void initNodesAnchors(){

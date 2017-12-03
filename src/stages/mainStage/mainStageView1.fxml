@@ -1,39 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-
 <?import nodes.imViewContainer.ImViewContainer?>
-
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" stylesheets="@mainStageStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stages.mainStage.MainStageController">
     <children>
-        <VBox fx:id="controls" layoutX="486.0" layoutY="135.0" prefWidth="300.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+        <VBox fx:id="controls" alignment="TOP_CENTER" layoutX="486.0" layoutY="135.0" prefWidth="330.0" spacing="7.0"
+              AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
             <children>
-                <Button fx:id="pasteButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#pasteImageFromCB" prefHeight="80.0" prefWidth="300.0" text="Вставити зображення із буфера обміну" textAlignment="CENTER" wrapText="true" />
-                <Button fx:id="loadImageButton" mnemonicParsing="false" onAction="#loadImage" prefHeight="80.0" prefWidth="300.0" text="Завантажити зображення" textAlignment="CENTER" wrapText="true" />
-                <Button fx:id="saveImageButton" layoutX="10.0" layoutY="110.0" mnemonicParsing="false" onAction="#saveImage" prefHeight="80.0" prefWidth="300.0" text="Зберегти зображення" textAlignment="CENTER" wrapText="true" />
-                <Separator prefWidth="200.0" />
-                <Button fx:id="placeSignButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#placeSign" prefHeight="80.0" prefWidth="300.0" text="Розмістити вивіски" textAlignment="CENTER" wrapText="true" />
-                <Button fx:id="discardChangesButton" layoutX="10.0" layoutY="190.0" mnemonicParsing="false" onAction="#discardChanges" prefHeight="80.0" prefWidth="300.0" text="Відмінити усі зміни зображення" textAlignment="CENTER" wrapText="true" />
-                <Button fx:id="addSignButton" mnemonicParsing="false" onAction="#addSign" prefHeight="80.0" prefWidth="300.0" text="Додати вивіску" textAlignment="CENTER" wrapText="true" />
-                <Button fx:id="addMarkupButton" mnemonicParsing="false" onAction="#addMarkup" prefHeight="80.0" prefWidth="300.0" text="Додати розмітку" textAlignment="CENTER" wrapText="true" />
-            <CheckBox fx:id="historicalAreaBox" mnemonicParsing="false" onAction="#setHistoricalArea" text="Історичний ареал" />
+                <Label layoutX="10.0" layoutY="210.0" prefHeight="50.0" prefWidth="330.0" styleClass="groupLabel"
+                       text="Зображення">
+                    <padding>
+                        <Insets left="20.0"/>
+                    </padding>
+                </Label>
+                <Button fx:id="loadImageButton" mnemonicParsing="false" onAction="#loadImage" prefHeight="50.0"
+                        prefWidth="300.0" text="Завантажити" textAlignment="CENTER" wrapText="true"/>
+                <Button fx:id="pasteButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+                        onAction="#pasteImageFromCB" prefHeight="50.0" prefWidth="300.0" text="Вставити"
+                        textAlignment="CENTER" wrapText="true"/>
+                <Button fx:id="saveImageButton" layoutX="10.0" layoutY="110.0" mnemonicParsing="false"
+                        onAction="#saveImage" prefHeight="50.0" prefWidth="300.0" text="Зберегти" textAlignment="CENTER"
+                        wrapText="true"/>
+                <Label prefHeight="50.0" prefWidth="330.0" styleClass="groupLabel" text="Редагування">
+                    <VBox.margin>
+                        <Insets top="10.0"/>
+                    </VBox.margin>
+                    <padding>
+                        <Insets left="20.0"/>
+                    </padding>
+                </Label>
+                <Button fx:id="placeSignButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false"
+                        onAction="#placeSign" prefHeight="50.0" prefWidth="300.0" text="Розмістити вивіски"
+                        textAlignment="CENTER" wrapText="true"/>
+                <Button fx:id="addMarkupButton" mnemonicParsing="false" onAction="#addMarkup" prefHeight="50.0"
+                        prefWidth="300.0" text="Вказати розміри" textAlignment="CENTER" wrapText="true"/>
+                <Button fx:id="addSignButton" mnemonicParsing="false" onAction="#addSign" prefHeight="50.0"
+                        prefWidth="300.0" text="Додати вивіску" textAlignment="CENTER" wrapText="true"/>
+                <Button fx:id="discardChangesButton" layoutX="10.0" layoutY="190.0" mnemonicParsing="false"
+                        onAction="#discardChanges" prefHeight="50.0" prefWidth="300.0" text="Відмінити зміни"
+                        textAlignment="CENTER" wrapText="true"/>
+                <CheckBox fx:id="historicalAreaBox" mnemonicParsing="false" onAction="#setHistoricalArea"
+                          prefWidth="300.0" text="Історичний ареал"/>
                 <!--<Button mnemonicParsing="false" onAction="#openDataTool" text="Button" />-->
             </children>
         </VBox>
-        <VBox fx:id="imageViewVBox" alignment="CENTER" fillWidth="false" layoutX="238.0" layoutY="14.0" onDragDone="#onDragDone" onDragDropped="#onDragDropped" onDragExited="#onDragExited" onDragOver="#onDragOver" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="320.0" AnchorPane.topAnchor="50.0">
+        <VBox fx:id="imageViewVBox" alignment="CENTER" fillWidth="false" layoutX="238.0" layoutY="14.0"
+              onDragDone="#onDragDone" onDragDropped="#onDragDropped" onDragExited="#onDragExited"
+              onDragOver="#onDragOver" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0"
+              AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="40.0">
             <children>
-                <Label fx:id="dNdLabel" graphicTextGap="0.0" text="Просто перенесіть зображення сюди" />
+                <Label fx:id="dNdLabel" graphicTextGap="0.0" text="Перенесіть зображення сюди"/>
                 <ImViewContainer fx:id="imageView"/>
             </children>
         </VBox>
-        <VBox fx:id="imageControls" layoutX="800.0" layoutY="60.0" prefWidth="150.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0" />
     </children>
 </AnchorPane>

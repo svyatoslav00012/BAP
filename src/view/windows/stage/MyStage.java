@@ -32,7 +32,11 @@ public class MyStage extends AnimatingStage {
 		return wcPane;
 	}
 
-	public MyStage(String fxml, WCBTypes... buttons) { // root must be Anchor Pane !!!
+
+	/**
+	 * root must be AnchorPane
+	 */
+	public MyStage(String fxml, WCBTypes... buttons) {
 		super(StageStyle.TRANSPARENT);
 		setScene(fxml);
 		init(buttons);

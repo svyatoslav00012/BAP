@@ -11,7 +11,7 @@
 }
 
 .resizingCircle{
-    -fx-background-color: blue;
+    -fx-background-color: rgb(255, 106, 94);
     -fx-background-radius: 50px;
 }
 

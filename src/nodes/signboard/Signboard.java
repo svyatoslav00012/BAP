@@ -50,11 +50,8 @@ public class Signboard extends Pane implements Serializable {
 		imageY = s.getImageY();
 		imageWidth = s.getImageWidth();
 		imageHeight = s.getImageHeight();
-		//setPrefWidth(s.getPrefWidth());
-		//setPrefHeight(s.getPrefHeight());
 		setOptions(s.getOptions());
 		sign.setText(s.getText());
-		applyStyle();
 	}
 
 	public ImViewContainer getImViewContainer() {
@@ -321,49 +318,49 @@ public class Signboard extends Pane implements Serializable {
 	}
 
 	public void updateSize_RealToActual() {
-		System.out.println("updateSize_RealToActual");
+		//System.out.println("updateSize_RealToActual");
 		options.setActualWidth((int) (getPrefWidth() * getImViewContainer().lengthCoef()));
 		options.setActualHeight((int) (getPrefHeight() * getImViewContainer().lengthCoef()));
 	}
 
 	public void updateBounds_RealToImage() {
-		System.out.println("updateBounds_RealToImage");
+		//System.out.println("updateBounds_RealToImage");
 		updateSize_RealToImage();
 		updatePosition_RealToImage();
 	}
 
 	public void updateSize_RealToImage() {
-		System.out.println("updateSize_RealToImage");
+		//System.out.println("updateSize_RealToImage");
 		setImageWidth((int) (getPrefWidth() / getImViewContainer().sizeCoef()));
 		setImageHeight((int) (getPrefHeight() / getImViewContainer().sizeCoef()));
 	}
 
 	public void updatePosition_RealToImage() {
-		System.out.println("updatePosition_RealToImage");
+		//System.out.println("updatePosition_RealToImage");
 		setImageX((int) (getLayoutX() / getImViewContainer().sizeCoef()));
 		setImageY((int) (getLayoutY() / getImViewContainer().sizeCoef()));
 	}
 
 	public void updateSize_ActualToReal() {
-		System.out.println("updateSize_ActualToReal");
+		//System.out.println("updateSize_ActualToReal");
 		setPrefWidth(options.getActualWidth() / getImViewContainer().lengthCoef());
 		setPrefHeight(options.getActualHeight() / getImViewContainer().lengthCoef());
 	}
 
 	public void updateBounds_ImageToReal() {
-		System.out.println("updateBounds_ImageToReal");
+		//System.out.println("updateBounds_ImageToReal");
 		updateSize_ImageToReal();
 		updatePosition_ImageToReal();
 	}
 
 	public void updateSize_ImageToReal() {
-		System.out.println("updateSize_ImageToReal");
+		//System.out.println("updateSize_ImageToReal");
 		setPrefWidth(getImageWidth() * getImViewContainer().sizeCoef());
 		setPrefHeight(getImageHeight() * getImViewContainer().sizeCoef());
 	}
 
 	public void updatePosition_ImageToReal() {
-		System.out.println("updatePosition_ImageToReal");
+		//System.out.println("updatePosition_ImageToReal");
 		setLayoutX(getImageX() * getImViewContainer().sizeCoef());
 		setLayoutY(getImageY() * getImViewContainer().sizeCoef());
 	}

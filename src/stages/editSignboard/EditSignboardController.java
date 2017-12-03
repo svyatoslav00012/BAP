@@ -26,6 +26,12 @@ public class EditSignboardController {
 	Markup testMarkup;
 
 	@FXML
+	private CheckBox applyToAllCheckBox;
+	@FXML
+	private Button okButton;
+	@FXML
+	private ComboBox fontSizeComboBox;
+	@FXML
 	private TextField widthField;
 	@FXML
 	private TextField heightField;
@@ -46,8 +52,6 @@ public class EditSignboardController {
 	@FXML
 	private ComboBox fontFamilyBox;
 	@FXML
-	private TextField fontSizeField;
-	@FXML
 	private AnchorPane anchorPane;
 	@FXML
 	private SplitPane splitPane;
@@ -61,6 +65,11 @@ public class EditSignboardController {
 		fontFamilyBox.setItems(
 				FXCollections.observableArrayList(
 						getFontLabels(Font.getFamilies())
+				)
+		);
+		fontSizeComboBox.setItems(
+				FXCollections.observableArrayList(
+						8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52
 				)
 		);
 	}
@@ -96,7 +105,6 @@ public class EditSignboardController {
 
 	public void onFontFamilyChoose(ActionEvent actionEvent) {
 		signboard.getOptions().getStyle().put(SignboardOptions.FONT_FAMILY, "'" + ((Label)fontFamilyBox.getValue()).getText() + "'");
-
 		signboard.applyStyle();
 	}
 
@@ -166,7 +174,7 @@ public class EditSignboardController {
 		widthField.setText(getOptions().getActualWidth() + "");
 
 		signTextField.setText(signboard.getText());
-		fontSizeField.setText(getOptions().getStyle().get(SignboardOptions.FONT_SIZE));
+		fontSizeComboBox.setValue(signboard.getOptions().getStyle().get(SignboardOptions.FONT_SIZE));
 
 		String fontColor = getOptions().getStyle().get(SignboardOptions.FONT_COLOR);
 		double red = Helper.extractRedFromCssRGB(fontColor);
@@ -205,8 +213,10 @@ public class EditSignboardController {
 		testContainer.setHistoricalArea(s.getImViewContainer().isHistoricalArea());
 		signboard = new Signboard(s);
 		signboard.setOptions(s.getOptions());
-		signboard.setLayoutX((testContainer.getPrefWidth() - signboard.getPrefWidth()) / 2);
-		signboard.setLayoutY((testContainer.getPrefHeight() - signboard.getPrefHeight()) / 2);
+		signboard.setImageX(200);
+		signboard.setImageY(150);
+		//signboard.setLayoutX((testContainer.getPrefWidth() - signboard.getPrefWidth()) / 2);
+		//signboard.setLayoutY((testContainer.getPrefHeight() - signboard.getPrefHeight()) / 2);
 		testContainer.addSign(signboard);
 		signboard.heightProperty().addListener(observable -> onSignboardResize());
 		signboard.widthProperty().addListener(observable -> onSignboardResize());
@@ -219,9 +229,8 @@ public class EditSignboardController {
 		signboard.updateSize_RealToImage();
 	}
 
-	public void onFontSizeChanged(KeyEvent keyEvent) {
-		if (!fontSizeField.getText().isEmpty())
-			signboard.getOptions().getStyle().put(SignboardOptions.FONT_SIZE, fontSizeField.getText());
+	public void onFontSizeChanged(ActionEvent keyEvent) {
+		signboard.getOptions().getStyle().put(SignboardOptions.FONT_SIZE, fontSizeComboBox.getValue().toString());
 		signboard.applyStyle();
 	}
 
@@ -229,5 +238,9 @@ public class EditSignboardController {
 		signboard.getOptions().setActualWidth(widthField.getText().isEmpty() ? 0 : Integer.parseInt(widthField.getText()));
 		signboard.updateSize_ActualToReal();
 		signboard.updateSize_RealToImage();
+	}
+
+	public void ok(ActionEvent actionEvent) {
+		((MyStage) splitPane.getScene().getWindow()).animatingClose();
 	}
 }

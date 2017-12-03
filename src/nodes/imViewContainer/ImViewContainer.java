@@ -64,18 +64,21 @@ public class ImViewContainer extends AnchorPane {
 		newContainer.setHistoricalArea(imageView.isHistoricalArea());
 		newContainer.setTestContainer(imageView.testContainer);
 		newContainer.getStylesheets().add("/nodes/markup/markupStyle.css");
-		for (Signboard s : imageView.signs) {
-			Signboard sb = new Signboard(s);
-			newContainer.signs.add(sb);
-			newContainer.getChildren().add(sb);
-			sb.updateBounds_ImageToReal();
-		}
 		for (Markup m : imageView.markups) {
 			Markup mk = new Markup(m);
 			newContainer.markups.add(mk);
 			mk.addAllToParent(newContainer);
 			mk.updateCenterPosition_ImToReal();
 		}
+		for (Signboard s : imageView.signs) {
+			Signboard sb = new Signboard(s);
+			newContainer.signs.add(sb);
+			newContainer.getChildren().add(sb);
+			System.out.println("SB : " + sb.getImageX() + " " + sb.getImageY() + " " + sb.getImageWidth() + " " + sb.getImageHeight());
+			sb.removeEdit();
+			sb.updateBounds_ImageToReal();
+		}
+
 		return newContainer;
 	}
 

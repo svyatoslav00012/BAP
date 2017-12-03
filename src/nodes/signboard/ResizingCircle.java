@@ -20,7 +20,7 @@ class ResizingCircle extends Region {
 
 		this.position = position;
 		getStyleClass().add("resizingCircle");
-		setPrefSize(20, 20);
+		setPrefSize(10, 10);
 
 		addEventFilter(MouseEvent.MOUSE_PRESSED, this::onPressed);
 		addEventFilter(MouseEvent.MOUSE_RELEASED, this::onReleased);

@@ -42,10 +42,10 @@ public class Markup {
 
 		startPoint = new MovingCircle(this);
 		startPoint.getStyleClass().add("markup_circle");
-		startPoint.setPrefSize(30, 30);
+		startPoint.setPrefSize(20, 20);
 		endPoint = new MovingCircle(this);
 		endPoint.getStyleClass().add("markup_circle");
-		endPoint.setPrefSize(30, 30);
+		endPoint.setPrefSize(20, 20);
 
 		line = new Line();
 		line.getStyleClass().add("markup_line");

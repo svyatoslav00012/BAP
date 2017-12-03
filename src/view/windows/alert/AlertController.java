@@ -106,7 +106,7 @@ public class AlertController {
 				break;
 			case CONFIRM:
 				if(!buttonsPane.getChildren().contains(buttonNo))buttonsPane.getChildren().add(buttonNo);
-				labelTitle.setText("ARE YOU SURE?");
+				labelTitle.setText("");
 				messageArea.setText(message.toString());
 				icon.setImage(CONFIRM_IMAGE);
 				break;

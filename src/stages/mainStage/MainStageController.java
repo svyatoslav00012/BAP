@@ -24,6 +24,7 @@ import view.windows.notifications.NotificationsController;
 import view.windows.stage.MyStage;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainStageController {
@@ -106,20 +107,20 @@ public class MainStageController {
 		double coefY = imageView.getHeight() / imageView.getImage().getHeight();
 
 
-			for (Rect r : objects[0]) {
-				imageView.addSign(r);
-			}
+		for (Rect r : objects[0]) {
+			imageView.addSign(r);
+		}
 	}
 
 	public void saveImage(ActionEvent actionEvent) {
 //		imageViewVBox.getChildren().remove(imageView);
 //		imageView = ImViewContainer.copy(imageView);
 //		imageViewVBox.getChildren().add(imageView);
-		if (imageView.getMarkups().isEmpty()){
+		if (imageView.getMarkups().isEmpty()) {
 			AlertController.showInfo("Додайте розмітку на зображння");
 			return;
 		}
-		if (imageView.getMarkups().get(0).getLength().getText().isEmpty()){
+		if (imageView.getMarkups().get(0).getLength().getText().isEmpty()) {
 			AlertController.showInfo("Введіть значення у розмітку");
 			return;
 		}
@@ -133,17 +134,17 @@ public class MainStageController {
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "/Desktop"));
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", ".png", ".jpg", ".jpeg"));
 		choice = fileChooser.showSaveDialog(imageView.getScene().getWindow());
-		if(choice == null)
+		if (choice == null)
 			return;
 
 		PlanView plan = new PlanView(imageView);
-		WritableImage planImage = new WritableImage((int)plan.getPrefWidth(), (int)plan.getPrefHeight());
+		WritableImage planImage = new WritableImage((int) plan.getPrefWidth(), (int) plan.getPrefHeight());
 		new Scene(plan).snapshot(planImage);
-		if(choice != null) {
+		if (choice != null) {
 			File planFile = new File(
 					choice.getParentFile().getAbsolutePath()
-					+ File.separatorChar + choice.getName().substring(0, choice.getName().indexOf('.')) + "_plan"
-					+ choice.getName().substring(choice.getName().indexOf('.'))
+							+ File.separatorChar + choice.getName().substring(0, choice.getName().indexOf('.')) + "_plan"
+							+ choice.getName().substring(choice.getName().indexOf('.'))
 			);
 			fileProcessor.saveImage(planImage, planFile);
 		}
@@ -151,7 +152,7 @@ public class MainStageController {
 		ImViewContainer imViewCopy = ImViewContainer.copy(imageView);
 		imViewCopy.fitSizeToImage();
 		WritableImage image = new WritableImage(
-				(int)imViewCopy.getWidth() + 1, (int)imViewCopy.getHeight() + 1
+				(int) imViewCopy.getWidth() + 1, (int) imViewCopy.getHeight() + 1
 		);
 		new Scene(imViewCopy).snapshot(image);
 
@@ -168,7 +169,7 @@ public class MainStageController {
 		File choice;
 		if ((choice = fileChooser.showOpenDialog(imageView.getScene().getWindow())) != null) {
 			if (new Image(choice.toURI().toString()).isError())
-				AlertController.showInfo("Choose correct image, please");
+				AlertController.showInfo("Виберіть корректне зображення");
 		} else return;
 		loadImage(choice);
 	}
@@ -233,8 +234,24 @@ public class MainStageController {
 	}
 
 	public void pasteImageFromCB(ActionEvent actionEvent) {
-		if (Clipboard.getSystemClipboard().hasImage())
-			setImage(Clipboard.getSystemClipboard().getImage());
+		try {
+			Image image;
+			if (Clipboard.getSystemClipboard().hasImage())
+				image = Clipboard.getSystemClipboard().getImage();
+			else if (Clipboard.getSystemClipboard().hasFiles()
+					&& !new Image(Clipboard.getSystemClipboard().getFiles().get(0).toURI().toString()).isError())
+				image = new Image(Clipboard.getSystemClipboard().getFiles().get(0).toURI().toString());
+			else return;
+			File curImage = new File("currentImage.png");
+			if (!curImage.exists())
+				curImage.createNewFile();
+			fileProcessor.saveImage(image, curImage);
+			loadImage(curImage);
+		} catch (IOException e) {
+			e.printStackTrace();
+			NotificationsController.showError("Зображення не вставлене");
+		}
+		NotificationsController.showComplete("Зображення вставлене");
 	}
 
 	public void discardChanges(ActionEvent actionEvent) {

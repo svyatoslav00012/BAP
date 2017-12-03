@@ -14,7 +14,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Random;
 
@@ -56,8 +55,8 @@ public class ImageProcessor implements ImageProcessorInterface {
 	}
 
 	public Mat drawRects(Mat source, ArrayList<Rect>... objects) {
-		Scalar red = new Scalar(255, 0, 0);
-		Scalar green = new Scalar(0, 255, 255);
+		Scalar color1 = new Scalar(244, 241, 229);
+		Scalar color2 = new Scalar(94, 106, 255);
 
 		int k = 0;
 		for (ArrayList<Rect> obj : objects) {
@@ -68,7 +67,7 @@ public class ImageProcessor implements ImageProcessorInterface {
 						source,
 						new Point(r.x, r.y),
 						new Point(r.x + r.width, r.y + r.height),
-						(k == 1) ? red : green,
+						(k == 1) ? color1 : color2,
 						Math.max(Math.min(source.width(), source.height()) / 100, 1),
 						8,
 						0

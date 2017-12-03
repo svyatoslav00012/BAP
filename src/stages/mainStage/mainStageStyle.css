@@ -1,34 +1,64 @@
 .root{
-    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-background-color: rgb(172, 184, 187);
 }
 
 #controls .button, #imageControls .button{
     -fx-background-color: transparent;
-    -fx-border-color: blue;
-    -fx-border-width: 2px;
+    -fx-text-fill: white;
+    -fx-font-weight: 300;
     -fx-font-size: 20px;
-    -fx-text-fill: blue;
+    -fx-cursor: hand;
 }
 
-#controls .button:hover, #imageControls .button:hover{
+#controls .button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+
+}
+
+#controls .button:pressed {
     -fx-font-weight: bold;
-    -fx-border-width: 3px;
+}
+
+#controls {
+    -fx-background-color: rgb(51, 62, 65);
 }
 
 #dNdLabel{
-    -fx-font-family: monospace;
+    -fx-font-family: 'Arial';
     -fx-font-size: 30px;
     -fx-font-weight: bold;
     -fx-text-fill: grey;
 }
 
 #historicalAreaBox{
-    -fx-text-fill: red;
-    -fx-font-size: 20px;
+    -fx-text-fill: honeydew;
+    -fx-font-size: 16px;
 }
+
+#historicalAreaBox .box {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-border-color: white;
+    -fx-border-width: 0px;
+}
+
+#historicalAreaBox:hover .box {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+}
+
+#historicalAreaBox:selected .mark {
+    -fx-background-color: white;
+}
+
 
 .separator *.line {
     -fx-border-style: solid;
     -fx-border-width: 2px;
     -fx-background-color: blue;
+}
+
+.groupLabel {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-background-color: rgb(255, 106, 94);
 }

@@ -1,7 +1,86 @@
 .root{
-    -fx-font-size: 14px;
+    -fx-font-family: 'Arial';
+    -fx-text-fill: rgb(51, 62, 65);
+}
+
+.check-box {
+    -fx-text-fill: rgb(51, 62, 65);
+    -fx-font-size: 16px;
+}
+
+.text-field {
+    -fx-font-size: 20px;
+}
+
+.check-box .box {
+    -fx-background-color: rgba(51, 62, 65, 0.2);
+    -fx-border-color: white;
+    -fx-border-width: 0px;
+}
+
+.check-box:hover .box {
+    -fx-background-color: rgba(51, 62, 65, 0.4);
+}
+
+.check-box:selected .mark {
+    -fx-background-color: green;
+}
+
+.imViewContainer {
+    -fx-background-color: lightgrey;
+}
+
+#anchorPane {
+    -fx-background-color: lightgrey;
+}
+
+#optionsBox .label {
+    -fx-font-size: 20px;
+    -fx-text-fill: rgb(51, 62, 65);
+}
+
+#optionsBox {
+    -fx-background-color: white;
 }
 
 #fontFamilyBox .label{
-    -fx-text-fill: black;
+    -fx-text-fill: rgb(51, 62, 65);
+}
+
+#okButton {
+    -fx-background-color: rgba(255, 106, 94, 0.9);
+    -fx-background-radius: 0px;
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+#okButton:hover {
+    -fx-background-color: rgba(255, 106, 94, 1);;
+}
+
+#okButton:pressed {
+    -fx-font-size: 21px;
+    -fx-fill: rgb(255, 106, 94);
+}
+
+#okHBox {
+    -fx-background-color: rgb(51, 62, 65);
+}
+
+#applyToAllCheckBox {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+#applyToAllCheckBox .box {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+#applyToAllCheckBox:hover .box {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+}
+
+#applyToAllCheckBox:selected .mark {
+    -fx-background-color: white;
 }

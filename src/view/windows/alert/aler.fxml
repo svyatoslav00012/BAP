@@ -10,7 +10,7 @@
                 <VBox fx:id="messagePane" layoutX="200.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="10.0">
                     <children>
                         <Label fx:id="labelTitle" layoutX="212.0" layoutY="23.0" text="Label" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="10.0" />
-                        <TextArea fx:id="messageArea" mouseTransparent="true" wrapText="true" editable="false" />
+                        <TextArea fx:id="messageArea" editable="false" mouseTransparent="true" wrapText="true"/>
                     </children>
                 </VBox>
                 <VBox fx:id="buttonsPane" alignment="CENTER" layoutX="500.0" layoutY="-10.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="510.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
@@ -19,7 +19,9 @@
                         <Button fx:id="buttonNo" mnemonicParsing="false" onAction="#answer" prefHeight="70.0" prefWidth="70.0" />
                     </children>
                 </VBox>
-                <ImageView fx:id="icon" fitHeight="180.0" fitWidth="180.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                <ImageView fx:id="icon" fitHeight="120.0" fitWidth="120.0" layoutX="14.0" layoutY="25.0"
+                           pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="40.0"
+                           AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="40.0"/>
                 <Button fx:id="buttonShowHideExceptionPane" layoutX="144.0" layoutY="159.0" mnemonicParsing="false" onAction="#showHide" prefHeight="40.0" prefWidth="40.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
             </children>
         </AnchorPane>

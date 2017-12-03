@@ -4,13 +4,14 @@
     -fx-background-position: center;
     -fx-background-repeat: no-repeat;
     -fx-opacity: 0.7;
+    -fx-effect: dropshadow(gaussian, white, 1, 1, 0, 0);
 }
 
 .button:hover{
     -fx-cursor: hand;
     -fx-opacity: 0.8;
     -fx-translate-y: -1;
-    -fx-effect: dropshadow(one-pass-box, black, 2, 1, 0, 1);
+    /*-fx-effect: dropshadow(one-pass-box, black, 2, 1, 0, 1);*/
 }
 
 #buttonClose{

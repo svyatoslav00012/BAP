@@ -1,65 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane prefHeight="800.0" prefWidth="600.0" stylesheets="/stages/editSignboard/editSignboardStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stages.editSignboard.EditSignboardController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="800.0" prefWidth="600.0"
+            stylesheets="@editSignboardStyle.css" xmlns="http://javafx.com/javafx/8"
+            fx:controller="stages.editSignboard.EditSignboardController">
     <children>
         <SplitPane fx:id="splitPane" dividerPositions="0.4" layoutX="239.0" layoutY="327.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
             <items>
                 <AnchorPane fx:id="anchorPane" minHeight="200.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                <AnchorPane>
+                <AnchorPane fx:id="optionsPane">
                     <children>
                         <ScrollPane fitToWidth="true" prefViewportHeight="446.0" prefViewportWidth="598.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                             <content>
-                                <VBox alignment="CENTER" spacing="10.0">
+                                <VBox fx:id="optionsBox" alignment="CENTER" spacing="10.0">
                                     <children>
-                                        <AnchorPane layoutX="10.0" layoutY="10.0" maxWidth="1000.0" prefHeight="50.0">
+                                        <AnchorPane layoutX="10.0" layoutY="10.0" maxWidth="600.0" prefHeight="50.0">
                                             <children>
-                                    <HBox alignment="CENTER" layoutX="234.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <Label alignment="CENTER_RIGHT" prefWidth="240.0"
+                                                       text="Висота та ширина, см" textAlignment="RIGHT"
+                                                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0"
+                                                       AnchorPane.topAnchor="0.0"/>
+                                                <HBox alignment="CENTER" prefWidth="200.0" spacing="15.0"
+                                                      AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="50.0"
+                                                      AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                                             <children>
-                                                <Label text="Висота" />
-                                                <TextField fx:id="heightField" onKeyTyped="#checkDigits" onKeyReleased="#onHeightChanged" prefHeight="40.0" prefWidth="70.0" />
-                                             </children>
-                                          </HBox>
-                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-                                             <children>
-                                                <Label text="Ширина" />
-                                                <TextField fx:id="widthField" onKeyTyped="#checkDigits" onKeyReleased="#onWidthChanged" prefHeight="40.0" prefWidth="70.0" />
-                                             </children>
-                                          </HBox>
+                                           <TextField fx:id="heightField" onKeyReleased="#onHeightChanged"
+                                                      onKeyTyped="#checkDigits" prefHeight="50.0" prefWidth="80.0"
+                                                      promptText="висота"/>
+                                           <Label text="Х"/>
+                                           <TextField fx:id="widthField" onKeyReleased="#onWidthChanged"
+                                                      onKeyTyped="#checkDigits" prefHeight="50.0" prefWidth="80.0"
+                                                      promptText="ширина"/>
                                        </children>
                                     </HBox>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane layoutX="10.0" layoutY="10.0" maxWidth="1000.0" prefHeight="50.0">
+                                        <AnchorPane maxWidth="600.0" prefHeight="50.0">
                                             <children>
-                                                <Label layoutX="46.0" layoutY="17.0" text="Текст" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
-                                                <TextField fx:id="signTextField" layoutX="428.0" layoutY="13.0" onKeyReleased="#onTextChanged" promptText="Текст на вивісці" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                                                <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="17.0"
+                                                       prefWidth="240.0" text=" Текст" textAlignment="RIGHT"
+                                                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0"
+                                                       AnchorPane.topAnchor="0.0"/>
+                                                <TextField fx:id="signTextField" layoutX="428.0" layoutY="13.0"
+                                                           onKeyReleased="#onTextChanged" onKeyTyped="#checkDigits"
+                                                           prefWidth="200.0" promptText="ваш текст"
+                                                           AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="50.0"
+                                                           AnchorPane.topAnchor="0.0"/>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane maxWidth="1000.0" prefHeight="50.0">
+                                        <AnchorPane layoutX="10.0" layoutY="60.0" maxWidth="600.0" prefHeight="50.0">
                                             <children>
-                                                <Label layoutX="46.0" layoutY="17.0" text="Розмір шрифту" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
-                                                <TextField fx:id="fontSizeField" layoutX="428.0" layoutY="13.0" onKeyTyped="#checkDigits" onKeyReleased="#onFontSizeChanged" promptText="Введіть розмір шрифту" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                                                <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="17.0"
+                                                       prefWidth="240.0" text="Шрифт" textAlignment="RIGHT"
+                                                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0"
+                                                       AnchorPane.topAnchor="0.0"/>
+                                                <ComboBox fx:id="fontFamilyBox" layoutX="428.0" layoutY="13.0"
+                                                          onAction="#onFontFamilyChoose" prefWidth="200.0"
+                                                          AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="50.0"
+                                                          AnchorPane.topAnchor="7.0"/>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane layoutX="10.0" layoutY="10.0" maxWidth="1000.0" prefHeight="50.0">
+                                        <AnchorPane layoutX="10.0" layoutY="10.0" maxWidth="600.0" prefHeight="50.0">
                                             <children>
-                                                <Label layoutX="46.0" layoutY="17.0" text="Колір шрифту" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
-                                                <ColorPicker fx:id="fontColorPicker" layoutX="446.0" layoutY="13.0" onAction="#chooseFontColor" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                                                <Label alignment="CENTER_RIGHT" layoutX="23.0" prefWidth="240.0"
+                                                       text="Розмір шрифту" textAlignment="RIGHT"
+                                                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0"
+                                                       AnchorPane.topAnchor="0.0"/>
+                                                <ComboBox fx:id="fontSizeComboBox" layoutX="419.0" layoutY="13.0"
+                                                          onAction="#onFontSizeChanged" prefWidth="200.0"
+                                                          AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="50.0"
+                                                          AnchorPane.topAnchor="7.0"/>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane layoutX="10.0" layoutY="60.0" maxWidth="1000.0" prefHeight="50.0">
+                                        <AnchorPane layoutX="10.0" layoutY="10.0" maxWidth="600.0" prefHeight="50.0">
                                             <children>
-                                                <Label layoutX="46.0" layoutY="17.0" text="Шрифт" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
-                                                <ComboBox fx:id="fontFamilyBox" layoutX="428.0" layoutY="13.0" onAction="#onFontFamilyChoose" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                                                <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="17.0"
+                                                       prefWidth="240.0" text="Колір шрифту" textAlignment="RIGHT"
+                                                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0"
+                                                       AnchorPane.topAnchor="0.0"/>
+                                                <ColorPicker fx:id="fontColorPicker" layoutX="446.0" layoutY="13.0"
+                                                             onAction="#chooseFontColor" prefWidth="200.0"
+                                                             AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="50.0"
+                                                             AnchorPane.topAnchor="7.0"/>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane layoutX="10.0" layoutY="110.0" maxWidth="1000.0" prefHeight="50.0">
+                                        <AnchorPane layoutX="10.0" layoutY="110.0" maxWidth="600.0" prefHeight="50.0">
                                             <children>
                                                 <HBox alignment="CENTER" layoutX="86.0" layoutY="-2.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <children>
@@ -70,24 +96,46 @@
                                                 </HBox>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane layoutX="10.0" layoutY="160.0" maxWidth="1000.0" prefHeight="50.0">
+                                        <AnchorPane layoutX="10.0" layoutY="160.0" maxWidth="600.0" prefHeight="50.0">
                                             <children>
-                                                <Label layoutX="46.0" layoutY="17.0" text="Колір фону" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
-                                                <ColorPicker fx:id="backgroundColorPicker" layoutX="458.0" layoutY="13.0" onAction="#chooseBackgroundColor" prefWidth="150.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                                                <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="17.0"
+                                                       prefWidth="240.0" text="Колір фону" AnchorPane.bottomAnchor="0.0"
+                                                       AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0"/>
+                                                <ColorPicker fx:id="backgroundColorPicker" layoutX="458.0"
+                                                             layoutY="13.0" onAction="#chooseBackgroundColor"
+                                                             prefWidth="200.0" AnchorPane.bottomAnchor="7.0"
+                                                             AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="7.0"/>
                                             </children>
                                         </AnchorPane>
-                                        <AnchorPane layoutX="10.0" layoutY="210.0" maxWidth="1000.0" prefHeight="50.0">
+                                        <AnchorPane layoutX="10.0" layoutY="210.0" maxWidth="600.0" prefHeight="50.0">
                                             <children>
-                                                <CheckBox fx:id="autoLimitedChoiceBox" layoutX="181.0" layoutY="17.0" mnemonicParsing="false" onAction="#onAutoLimitedChoose" text="Автоматично обмежувати розмір вивіски" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                                                <HBox alignment="CENTER" layoutX="50.0" AnchorPane.bottomAnchor="0.0"
+                                                      AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                                      AnchorPane.topAnchor="0.0">
+                                                    <children>
+                                                        <CheckBox fx:id="autoLimitedChoiceBox" layoutX="181.0"
+                                                                  layoutY="17.0" mnemonicParsing="false"
+                                                                  onAction="#onAutoLimitedChoose"
+                                                                  text="Автоматично обмежувати розмір вивіски"
+                                                                  AnchorPane.bottomAnchor="0.0"
+                                                                  AnchorPane.leftAnchor="50.0"
+                                                                  AnchorPane.topAnchor="0.0"/>
+                                                    </children>
+                                                </HBox>
                                             </children>
                                         </AnchorPane>
                                     </children>
                                 </VBox>
                             </content>
                         </ScrollPane>
-                        <HBox alignment="CENTER" layoutX="145.0" layoutY="365.0" prefHeight="70.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                        <HBox fx:id="okHBox" alignment="CENTER" layoutX="145.0" layoutY="365.0" prefHeight="70.0"
+                              spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0">
                             <children>
-                                <Button fx:id="applyToAllButton" mnemonicParsing="false" onAction="#applyToAll" text="Застосувати налаштування для усіх вивісок на зображенні" />
+                                <Button fx:id="okButton" defaultButton="true" mnemonicParsing="false" onAction="#ok"
+                                        prefWidth="150.0" text="OK"/>
+                                <CheckBox fx:id="applyToAllCheckBox" mnemonicParsing="false"
+                                          text="Застосувати до всіх вивісок"/>
                             </children>
                         </HBox>
                     </children>

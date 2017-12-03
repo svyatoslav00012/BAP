@@ -39,6 +39,7 @@ public class PlanView extends ImViewContainer {
 	}
 
 	public void addSignToPlan(Signboard s) {
+		s.removeEdit();
 		int y = 100;
 		for(Signboard prev: getSigns())
 			y += prev.getImageHeight() + 200;
@@ -47,6 +48,7 @@ public class PlanView extends ImViewContainer {
 		s.updateBounds_ImageToReal();
 		s.setLayoutX(200);
 		s.setLayoutY(y);
+		s.updateBounds_RealToImage();
 	}
 
 	public void drawAnnotations() {
