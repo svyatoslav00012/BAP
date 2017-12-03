@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<AnchorPane maxHeight="500.0" maxWidth="600.0" minHeight="200.0" minWidth="600.0" prefHeight="200.0" prefWidth="600.0" snapToPixel="false" stylesheets="/view/windows/alert/alertStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.windows.alert.AlertController">
+    <children>
+        <AnchorPane fx:id="infoPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0">
+            <children>
+                <VBox fx:id="messagePane" layoutX="200.0" layoutY="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="190.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="10.0">
+                    <children>
+                        <Label fx:id="labelTitle" layoutX="212.0" layoutY="23.0" text="Label" AnchorPane.leftAnchor="200.0" AnchorPane.topAnchor="10.0" />
+                        <TextArea fx:id="messageArea" mouseTransparent="true" wrapText="true" editable="false" />
+                    </children>
+                </VBox>
+                <VBox fx:id="buttonsPane" alignment="CENTER" layoutX="500.0" layoutY="-10.0" prefHeight="200.0" prefWidth="100.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="510.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                    <children>
+                        <Button fx:id="buttonYes" mnemonicParsing="false" onAction="#answer" prefHeight="70.0" prefWidth="70.0" />
+                        <Button fx:id="buttonNo" mnemonicParsing="false" onAction="#answer" prefHeight="70.0" prefWidth="70.0" />
+                    </children>
+                </VBox>
+                <ImageView fx:id="icon" fitHeight="180.0" fitWidth="180.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                <Button fx:id="buttonShowHideExceptionPane" layoutX="144.0" layoutY="159.0" mnemonicParsing="false" onAction="#showHide" prefHeight="40.0" prefWidth="40.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="exceptionPane" layoutY="200.0" opacity="0.0" prefHeight="300.0" prefWidth="600.0">
+            <children>
+                    <TextArea fx:id="traceArea" editable="false" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                <HBox fx:id="optionsPane" layoutX="390.0" layoutY="226.0" prefHeight="50.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                    <children>
+                        <Button fx:id="buttonCopyToCB" mnemonicParsing="false" onAction="#copyToCB" prefHeight="50.0" prefWidth="50.0" />
+                        <Button fx:id="buttonReport" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#report" prefHeight="50.0" prefWidth="50.0" />
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>

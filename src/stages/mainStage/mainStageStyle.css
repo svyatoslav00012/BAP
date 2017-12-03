@@ -1,0 +1,34 @@
+.root{
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+}
+
+#controls .button, #imageControls .button{
+    -fx-background-color: transparent;
+    -fx-border-color: blue;
+    -fx-border-width: 2px;
+    -fx-font-size: 20px;
+    -fx-text-fill: blue;
+}
+
+#controls .button:hover, #imageControls .button:hover{
+    -fx-font-weight: bold;
+    -fx-border-width: 3px;
+}
+
+#dNdLabel{
+    -fx-font-family: monospace;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: grey;
+}
+
+#historicalAreaBox{
+    -fx-text-fill: red;
+    -fx-font-size: 20px;
+}
+
+.separator *.line {
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-background-color: blue;
+}

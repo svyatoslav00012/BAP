@@ -1,0 +1,21 @@
+.root{
+    -fx-background-color: blue;
+    -fx-font-size: 16px;
+    -fx-font-weight: 900;
+    -fx-cursor: hand;
+}
+
+#info{
+    -fx-text-fill: yellow;
+}
+
+#time{
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+}
+
+.root:hover{
+    -fx-background-color: green;
+    -fx-background-radius: 50px;
+}
+

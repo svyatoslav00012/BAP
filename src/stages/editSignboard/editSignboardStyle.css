@@ -1,0 +1,7 @@
+.root{
+    -fx-font-size: 14px;
+}
+
+#fontFamilyBox .label{
+    -fx-text-fill: black;
+}

@@ -1,0 +1,50 @@
+.root{
+    -fx-background-radius: 5px;
+    -fx-background-color: rgb(92, 145, 255);
+}
+
+.button{
+    -fx-background-color: transparent;
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+}
+
+.button:hover{
+    -fx-cursor: hand;
+    -fx-translate-y: -1;
+    -fx-effect: dropshadow(gaussian, white, 2, 1, 0, 0);
+}
+
+#buttonYes{
+    -fx-background-image: url("/view/images/yes.png");
+}
+
+#buttonNo{
+    -fx-background-image: url("/view/images/no.png");
+}
+
+#buttonShowHideExceptionPane{
+    -fx-background-image: url("/view/images/arrow-down.png");
+}
+
+#buttonCopyToCB{
+    -fx-background-image: url("/view/images/copy.png");
+}
+
+#labelTitle{
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: green;
+}
+
+#messageArea{
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-font-size: 18px;
+    -fx-border-insets: 0;
+}
+
+.scroll-pane, .scroll-pane .viewport, .scroll-pane .content{
+    -fx-background-color: transparent;
+}

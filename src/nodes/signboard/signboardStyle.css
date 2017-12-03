@@ -1,0 +1,65 @@
+.rectangle{
+    -fx-cursor: hand;
+    -fx-border-color: blue;
+    -fx-border-width: 1px;
+    -fx-background-color: rgba(255, 255, 255, 0.5);
+    -fx-border-style: segments(10, 15, 15, 15)  line-cap round ;
+}
+
+.rectangle .size {
+    -fx-font-size: 16px;
+}
+
+.resizingCircle{
+    -fx-background-color: blue;
+    -fx-background-radius: 50px;
+}
+
+.tl_br_circle{
+    -fx-cursor: nw_resize;
+}
+
+.tm_bm_circle{
+    -fx-cursor: n_resize;
+}
+
+.tr_bl_circle{
+    -fx-cursor: ne_resize;
+}
+
+.cl_cr_circle{
+    -fx-cursor: h_resize;
+}
+
+.rectangle .sign {
+    -fx-text-fill: inherit;
+    -fx-underline: inherit;
+}
+
+.toBig{
+    -fx-font-size: 17px;
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
+
+/*.sign{*/
+    /*-fx-background-color: transparent;*/
+    /*-fx-text-fill: blue;*/
+    /*-fx-font-weight: bold;*/
+/*}*/
+
+.editButton{
+
+    -fx-font-size: 100%;
+    -fx-background-size: 100%;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+
+
+    -fx-background-image: url("/nodes/signboard/edit.png");
+    -fx-background-color: transparent;
+}
+
+.editButton:hover{
+    -fx-effect: dropshadow(three-pass-box, yellow, 2, 2, 0, 0)
+}

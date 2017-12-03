@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="800.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cascadeTraining.view.Controller">
+   <children>
+      <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="/cascadeTraining/view/style.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+        <tabs>
+          <Tab fx:id="prepearingTab" closable="false" text="Prepearing data">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" layoutX="248.0" layoutY="87.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <children>
+                              <Hyperlink fx:id="chooseDirLink" onAction="#chooseDir" text="Choose work directory" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
+                                 <children>
+                                    <HBox spacing="20.0">
+                                       <children>
+                                          <Label fx:id="dataLabel" text="data" />
+                                          <Button fx:id="createDataButton" mnemonicParsing="false" onAction="#createFile" text="create" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" spacing="20.0">
+                                       <children>
+                                          <Label fx:id="newPosLabel" text="newPos" />
+                                          <Button fx:id="createNewPosButton" mnemonicParsing="false" onAction="#createFile" text="create" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" spacing="20.0">
+                                       <children>
+                                          <Label text="newInfo.txt" />
+                                          <Button fx:id="createNewInfoButton" mnemonicParsing="false" onAction="#createFile" text="create" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Pos" />
+                                          <Button fx:id="createPosButton" mnemonicParsing="false" onAction="#createFile" text="create" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" spacing="20.0">
+                                       <children>
+                                          <Label text="info.txt" />
+                                          <Button fx:id="createInfoButton" mnemonicParsing="false" onAction="#createFile" text="create" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" spacing="20.0">
+                                       <children>
+                                          <Label text="Neg" />
+                                          <Button fx:id="createNegButton" mnemonicParsing="false" onAction="#createFile" text="create" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" spacing="20.0">
+                                       <children>
+                                          <Label text="bg.txt" />
+                                          <Button fx:id="createBgButton" mnemonicParsing="false" onAction="#createFile" text="create" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" spacing="20.0">
+                                       <children>
+                                          <Label text="NegSource" />
+                                          <Button fx:id="createNegSourceButton" mnemonicParsing="false" onAction="#createFile" text="create" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="220.0" spacing="20.0">
+                                       <children>
+                                          <Label text="vecFile.vec" />
+                                          <Button fx:id="createVecFileButton" mnemonicParsing="false" onAction="#createFile" text="create" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <Button fx:id="rewriteBgButton" mnemonicParsing="false" onAction="#rewriteBg" prefWidth="200.0" text="rewrite bg.txt" />
+                              <Button fx:id="rewriteInfoButton" layoutX="374.0" layoutY="233.0" mnemonicParsing="false" onAction="#rewriteInfo" prefWidth="200.0" text="rewrite info.txt" />
+                              <Button fx:id="rewriteNewInfoButton" layoutX="374.0" layoutY="253.0" mnemonicParsing="false" onAction="#rewriteNewInfo" prefWidth="200.0" text="rewrite newInfo.txt" />
+                              <Button fx:id="annotationInfoButton" layoutX="374.0" layoutY="323.0" mnemonicParsing="false" onAction="#annotationInfo" prefWidth="200.0" text="annotation info.txt" />
+                              <Button fx:id="annotationNewInfoButton" layoutX="374.0" layoutY="358.0" mnemonicParsing="false" onAction="#annotationNewInfo" prefWidth="200.0" text="annotation newInfo.txt" />
+                              <Button fx:id="mergeInfoButton" layoutX="374.0" layoutY="393.0" mnemonicParsing="false" onAction="#mergeInfo" prefWidth="200.0" text="merge info" />
+                              <Button fx:id="generateNegatives" layoutX="100.0" layoutY="493.0" mnemonicParsing="false" onAction="#generateNegImages" prefWidth="200.0" text="generate negatives" />
+                              <Button fx:id="myFuncButton" layoutX="100.0" layoutY="563.0" mnemonicParsing="false" onAction="#myFunction" prefWidth="300.0" text="my action" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="createSamplesTab" text="Create samples">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" layoutX="32.0" layoutY="7.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <children>
+                              <VBox fx:id="samplesParamsVBox" spacing="5.0">
+                                 <children>
+                                    <HBox spacing="20.0">
+                                       <children>
+                                          <Label text="h" />
+                                          <TextField fx:id="heightField" promptText="hight" text="24" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" spacing="20.0">
+                                       <children>
+                                          <Label text="w" />
+                                          <TextField fx:id="widthField" promptText="width" text="24" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="35.0" spacing="20.0">
+                                       <children>
+                                          <Label text="num" />
+                                          <TextField fx:id="numSampsField" promptText="number of samples" text="1000" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <Button fx:id="createSamplesButton" mnemonicParsing="false" onAction="#createSamples" prefHeight="50.0" prefWidth="200.0" text="create samples" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="trainTab" text="Train cascade">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                           <children>
+                              <VBox fx:id="trainParamsVBox" spacing="5.0">
+                                 <children>
+                                    <HBox spacing="20.0">
+                                       <children>
+                                          <Label text="numPos" />
+                                          <TextField fx:id="numPosField" prefWidth="200.0" promptText="number of positive samples" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="10.0" spacing="20.0">
+                                       <children>
+                                          <Label text="numNeg" />
+                                          <TextField fx:id="numNegField" prefWidth="200.0" promptText="number of negative samples" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="35.0" spacing="20.0">
+                                       <children>
+                                          <Label text="numStages" />
+                                          <TextField fx:id="numStagesField" prefWidth="200.0" promptText="number of stages" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="70.0" spacing="20.0">
+                                       <children>
+                                          <Label text="precalcValBufSize" />
+                                          <TextField fx:id="pVBSField" prefWidth="200.0" promptText="RAM size" text="1024" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="100.0" spacing="20.0">
+                                       <children>
+                                          <Label text="precalcIdxBufSize" />
+                                          <TextField fx:id="pIBSField" prefWidth="200.0" promptText="RAM size" text="1024" />
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="130.0" spacing="20.0">
+                                       <children>
+                                          <Label text="numThreads" />
+                                          <TextField fx:id="numThreadsField" prefWidth="200.0" promptText="number of threads" text="9" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <Button fx:id="trainCascadeButton" mnemonicParsing="false" onAction="#trainCascade" prefHeight="50.0" prefWidth="300.0" text="Train cascade" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

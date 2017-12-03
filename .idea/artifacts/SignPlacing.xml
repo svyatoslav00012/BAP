@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SignPlacing">
+    <output-path>$PROJECT_DIR$/out/artifacts/SignPlacing</output-path>
+    <root id="archive" name="SignPlacing.jar">
+      <element id="file-copy" path="C:/opencv/build/java/opencv-331.jar" />
+      <element id="module-output" name="BAP" />
+    </root>
+  </artifact>
+</component>

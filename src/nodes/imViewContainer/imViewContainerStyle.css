@@ -1,0 +1,7 @@
+.imViewContainer{
+    -fx-background-color: green;
+}
+
+.imageView{
+    -fx-background-color: blue;
+}

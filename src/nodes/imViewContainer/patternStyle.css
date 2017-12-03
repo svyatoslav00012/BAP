@@ -1,0 +1,19 @@
+.imViewContainer{
+    -fx-background-color: white;
+    -fx-border-color: darkslategray;
+    -fx-border-style: segments(10, 15, 15, 15)  line-cap round ;
+}
+
+.punktir{
+    -fx-stroke-width: 2px;
+    -fx-stroke: black;
+    -fx-stroke-dash-array: 5 5 5 5;
+    -fx-stroke-dash-offset: 5;
+    -fx-stroke-line-cap: butt;
+}
+
+.sizeLabel{
+    -fx-font-size: 20px;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow(gaussian, white, 2, 2, 0, 0);
+}

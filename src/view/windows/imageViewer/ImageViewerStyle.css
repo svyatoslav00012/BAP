@@ -1,0 +1,24 @@
+#root{
+    -fx-background-color: rgb(0, 0, 0, 0.7);
+}
+
+.button{
+    -fx-background-color: transparent;
+    -fx-background-position: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100%;
+    -fx-effect: dropshadow(gaussian, white, 2, 2, 0, 1);
+    -fx-background-radius: 50px;
+}
+
+.button:hover{
+    -fx-effect: dropshadow(gaussian, white, 5, 2, 0, 1);
+}
+
+.image-view{
+    -fx-effect: dropshadow(gaussian, white, 2, 2, 0, 1);
+}
+
+#btnClose{
+    -fx-background-image: url("/resources/images/close.png");
+}
