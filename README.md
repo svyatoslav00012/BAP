@@ -9,3 +9,7 @@ How it works?
 4. Add markup to image to determine size
 5. Save results as 1) image with new signboards 2) plan with each signboard (bounds and whole info)
 6. Enjoy =)
+
+Currently working.
+
+P.S. Has some bugs and bad cascade for classifying windows and doors (because of poor training set)
