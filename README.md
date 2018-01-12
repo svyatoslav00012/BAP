@@ -12,4 +12,9 @@ How it works?
 
 Currently working.
 
+Technologies:
+-Java Core
+-JavaFX
+-OpenCV
+
 P.S. Has some bugs and bad cascade for classifying windows and doors (because of poor training set)
