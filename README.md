@@ -1,4 +1,4 @@
-# BAP
+# BAP - building add placement
 App, which helps you to place signboards on building, according to Lviv's laws.
 
 How it works?
